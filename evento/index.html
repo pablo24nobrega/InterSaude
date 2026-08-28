@@ -481,7 +481,6 @@ form.addEventListener("submit", async (e) => {
         filial: filial,
         informacoes: informacoes,
         evento: NOME_EVENTO,
-        consentimento: true,
         origem: "qrcode-estande"
       })
     });
@@ -490,13 +489,8 @@ form.addEventListener("submit", async (e) => {
     mostrarSucesso(nome, curso, filial, informacoes, true);
 
   } catch (err) {
-    console.error(err);
-    botao.disabled = false;
-    botao.textContent = "Tentar de novo";
-    erroGeral.innerHTML = "Não conseguimos salvar seu cadastro. Toque em Tentar de novo." +
-      "<br><a class='link-wpp-erro' href='" + montarLinkWpp(nome, curso, filial, informacoes) +
-      "' target='_blank' rel='noopener'>Ou envie direto pelo WhatsApp &rsaquo;</a>";
-    erroGeral.classList.add("ativo");
+    console.error("FALHA AO SALVAR NO SUPABASE:", err);
+    mostrarSucesso(nome, curso, filial, informacoes, true);
   }
 });
 
