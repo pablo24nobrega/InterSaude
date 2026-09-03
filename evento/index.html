@@ -307,6 +307,63 @@
   @media (prefers-reduced-motion:reduce){
     *{transition:none!important;animation:none!important}
   }
+
+  /* ---- seletor de modo ---- */
+  .seletor{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:6px;
+    background:#fff;
+    border:1.5px solid var(--line);
+    border-radius:14px;
+    padding:6px;
+    margin-bottom:22px;
+  }
+
+  .aba{
+    width:100%;
+    font-family:inherit;
+    font-size:15px;
+    font-weight:700;
+    color:var(--neutro);
+    background:transparent;
+    border:none;
+    border-radius:10px;
+    padding:13px 6px;
+    cursor:pointer;
+    transition:background .15s ease,color .15s ease;
+  }
+
+  .aba:hover:not(.ativa){background:var(--paper);color:var(--neutro)}
+  .aba.ativa,.aba.ativa:hover{background:var(--teal);color:#fff}
+  .aba:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
+
+  /* ---- linhas com dois campos lado a lado ---- */
+  .linha{
+    display:grid;
+    gap:12px;
+    grid-template-columns:1fr;
+    margin-bottom:18px;
+  }
+
+  @media (min-width:400px){
+    .linha.rua-num{grid-template-columns:1fr 108px}
+    .linha.cid-uf{grid-template-columns:1fr 90px}
+  }
+
+  .linha .campo{margin-bottom:0}
+
+  .dica-cep{
+    font-size:13px;
+    line-height:1.45;
+    color:var(--neutro);
+    margin-top:6px;
+  }
+
+  .dica-cep.erro-cep{color:var(--danger)}
+
+  /* o pre-cadastro comeca escondido; o seletor decide */
+  #formPre{display:none}
 </style>
 </head>
 <body>
@@ -322,6 +379,12 @@
 </header>
 
 <main>
+
+  <!-- ============ SELETOR DE MODO ============ -->
+  <div class="seletor" id="seletor" role="tablist">
+    <button type="button" class="aba ativa" data-modo="saber" role="tab" aria-selected="true" aria-controls="form">Quero saber mais</button>
+    <button type="button" class="aba" data-modo="pre" role="tab" aria-selected="false" aria-controls="formPre">Fazer pré-cadastro</button>
+  </div>
 
   <!-- ============ FORMULÁRIO ============ -->
   <form id="form" novalidate>
@@ -374,6 +437,106 @@
     <button type="submit" id="botao">Enviar</button>
   </form>
 
+  <!-- ============ FORMULÁRIO — PRÉ-CADASTRO ============ -->
+  <form id="formPre" novalidate>
+
+    <div class="campo">
+      <label for="pNome">Nome completo</label>
+      <input type="text" id="pNome" name="pNome" autocomplete="name" placeholder="Seu nome">
+      <div class="aviso" id="avisoPNome">Escreva seu nome completo.</div>
+    </div>
+
+    <div class="campo">
+      <label for="pCpf">CPF</label>
+      <input type="text" id="pCpf" name="pCpf" inputmode="numeric" autocomplete="off" placeholder="000.000.000-00" maxlength="14">
+      <div class="aviso" id="avisoPCpf">Digite um CPF válido.</div>
+    </div>
+
+    <div class="campo">
+      <label for="pEmail">E-mail</label>
+      <input type="text" id="pEmail" name="pEmail" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="voce@email.com" maxlength="120">
+      <div class="aviso" id="avisoPEmail">Digite um e-mail válido.</div>
+    </div>
+
+    <div class="campo">
+      <label for="pTelefone">WhatsApp</label>
+      <input type="tel" id="pTelefone" name="pTelefone" inputmode="numeric" autocomplete="tel" placeholder="(00) 00000-0000" maxlength="15">
+      <div class="aviso" id="avisoPTelefone">Digite o número com DDD.</div>
+    </div>
+
+    <div class="campo">
+      <label for="pCep">CEP</label>
+      <input type="text" id="pCep" name="pCep" inputmode="numeric" autocomplete="postal-code" placeholder="00000-000" maxlength="9">
+      <div class="dica-cep" id="dicaCep">Preenchemos o endereço para você.</div>
+      <div class="aviso" id="avisoPCep">Digite um CEP válido.</div>
+    </div>
+
+    <div class="linha rua-num">
+      <div class="campo">
+        <label for="pRua">Rua</label>
+        <input type="text" id="pRua" name="pRua" autocomplete="address-line1" placeholder="Preenchido pelo CEP" maxlength="120">
+        <div class="aviso" id="avisoPRua">Informe a rua.</div>
+      </div>
+      <div class="campo">
+        <label for="pNumero">Número</label>
+        <input type="text" id="pNumero" name="pNumero" inputmode="numeric" autocomplete="off" placeholder="000" maxlength="10">
+        <div class="aviso" id="avisoPNumero">Informe o número.</div>
+      </div>
+    </div>
+
+    <div class="campo">
+      <label for="pComplemento">Complemento <span class="opcional">(opcional)</span></label>
+      <input type="text" id="pComplemento" name="pComplemento" autocomplete="off" placeholder="Apto, bloco, referência" maxlength="60">
+    </div>
+
+    <div class="campo">
+      <label for="pBairro">Bairro</label>
+      <input type="text" id="pBairro" name="pBairro" autocomplete="address-level3" placeholder="Preenchido pelo CEP" maxlength="80">
+      <div class="aviso" id="avisoPBairro">Informe o bairro.</div>
+    </div>
+
+    <div class="linha cid-uf">
+      <div class="campo">
+        <label for="pCidade">Cidade</label>
+        <input type="text" id="pCidade" name="pCidade" autocomplete="address-level2" placeholder="Preenchido pelo CEP" maxlength="80">
+        <div class="aviso" id="avisoPCidade">Informe a cidade.</div>
+      </div>
+      <div class="campo">
+        <label for="pEstado">Estado</label>
+        <input type="text" id="pEstado" name="pEstado" autocomplete="address-level1" autocapitalize="characters" placeholder="UF" maxlength="2">
+        <div class="aviso" id="avisoPEstado">UF.</div>
+      </div>
+    </div>
+
+    <div class="campo">
+      <label for="pCurso">Curso de interesse</label>
+      <select id="pCurso" name="pCurso">
+        <option value="">Selecione o curso</option>
+        <option>Cuidador Sênior — 80h</option>
+        <option>Pós em Fisioterapia Pélvica — 360h</option>
+        <option>Pós em Fisioterapia em UTI Adulto — 360h</option>
+        <option>Pós em Enfermagem em UTI Adulto — 360h</option>
+      </select>
+      <div class="aviso" id="avisoPCurso">Escolha um curso.</div>
+    </div>
+
+    <div class="campo">
+      <label for="pFilial">Congregação (Filial)</label>
+      <input type="text" id="pFilial" name="pFilial" autocomplete="off" autocapitalize="words" placeholder="Digite sua congregação" maxlength="60">
+      <div class="aviso" id="avisoPFilial">Informe sua congregação.</div>
+    </div>
+
+    <!-- anti-robô: humano nunca vê, robô preenche -->
+    <div class="hp" aria-hidden="true">
+      <label for="pEmpresa">Empresa</label>
+      <input type="text" id="pEmpresa" name="pEmpresa" tabindex="-1" autocomplete="off">
+    </div>
+
+    <p class="nota">Usaremos seus dados para entrar em contato e concluir sua matrícula.</p>
+
+    <button type="submit" id="botaoPre">Enviar pré-cadastro</button>
+  </form>
+
   <!-- ============ CONFIRMAÇÃO ============ -->
   <section id="sucesso">
     <div class="cracha">
@@ -414,25 +577,139 @@ const NOME_EVENTO = "Evento Evangelico 2026";
 const WHATSAPP_INTERSAUDE = "5521999979218";   // 21 99997-9218
 /* ============================================================== */
 
+const seletor = document.getElementById("seletor");
 const form = document.getElementById("form");
+const formPre = document.getElementById("formPre");
 const botao = document.getElementById("botao");
+const botaoPre = document.getElementById("botaoPre");
 const erroGeral = document.getElementById("erroGeral");
 const tel = document.getElementById("telefone");
+const pTel = document.getElementById("pTelefone");
+const pCpf = document.getElementById("pCpf");
+const pCep = document.getElementById("pCep");
+const dicaCep = document.getElementById("dicaCep");
 
-/* máscara de telefone */
-tel.addEventListener("input", () => {
-  let v = tel.value.replace(/\D/g, "").slice(0, 11);
-  if (v.length > 6) {
-    v = v.length === 11
-      ? `(${v.slice(0,2)}) ${v.slice(2,7)}-${v.slice(7)}`
-      : `(${v.slice(0,2)}) ${v.slice(2,6)}-${v.slice(6)}`;
-  } else if (v.length > 2) {
-    v = `(${v.slice(0,2)}) ${v.slice(2)}`;
-  } else if (v.length > 0) {
-    v = `(${v}`;
-  }
-  tel.value = v;
+/* ---- alterna entre os dois formulários, sem recarregar ---- */
+const abas = document.querySelectorAll(".aba");
+
+abas.forEach(function (aba) {
+  aba.addEventListener("click", function () {
+    const pre = aba.dataset.modo === "pre";
+    abas.forEach(function (a) {
+      const ativa = a === aba;
+      a.classList.toggle("ativa", ativa);
+      a.setAttribute("aria-selected", ativa ? "true" : "false");
+    });
+    form.style.display = pre ? "none" : "block";
+    formPre.style.display = pre ? "block" : "none";
+  });
 });
+
+/* máscara de telefone — mesma dos dois formulários */
+function mascaraTelefone(campo) {
+  campo.addEventListener("input", () => {
+    let v = campo.value.replace(/\D/g, "").slice(0, 11);
+    if (v.length > 6) {
+      v = v.length === 11
+        ? `(${v.slice(0,2)}) ${v.slice(2,7)}-${v.slice(7)}`
+        : `(${v.slice(0,2)}) ${v.slice(2,6)}-${v.slice(6)}`;
+    } else if (v.length > 2) {
+      v = `(${v.slice(0,2)}) ${v.slice(2)}`;
+    } else if (v.length > 0) {
+      v = `(${v}`;
+    }
+    campo.value = v;
+  });
+}
+
+mascaraTelefone(tel);
+mascaraTelefone(pTel);
+
+/* máscara de CPF */
+pCpf.addEventListener("input", () => {
+  let v = pCpf.value.replace(/\D/g, "").slice(0, 11);
+  if (v.length > 9) {
+    v = `${v.slice(0,3)}.${v.slice(3,6)}.${v.slice(6,9)}-${v.slice(9)}`;
+  } else if (v.length > 6) {
+    v = `${v.slice(0,3)}.${v.slice(3,6)}.${v.slice(6)}`;
+  } else if (v.length > 3) {
+    v = `${v.slice(0,3)}.${v.slice(3)}`;
+  }
+  pCpf.value = v;
+});
+
+/* máscara de CEP + busca assim que completa os 8 dígitos */
+pCep.addEventListener("input", () => {
+  let v = pCep.value.replace(/\D/g, "").slice(0, 8);
+  if (v.length > 5) v = `${v.slice(0,5)}-${v.slice(5)}`;
+  pCep.value = v;
+  if (v.replace(/\D/g, "").length === 8) buscarCep();
+});
+
+pCep.addEventListener("blur", buscarCep);
+
+/* CPF pelos dígitos verificadores */
+function cpfValido(digitos) {
+  if (digitos.length !== 11) return false;
+  if (/^(\d)\1{10}$/.test(digitos)) return false;
+  for (let corte = 9; corte <= 10; corte++) {
+    let soma = 0;
+    for (let i = 0; i < corte; i++) soma += Number(digitos[i]) * (corte + 1 - i);
+    let dv = (soma * 10) % 11;
+    if (dv === 10) dv = 0;
+    if (dv !== Number(digitos[corte])) return false;
+  }
+  return true;
+}
+
+function emailValido(valor) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(valor);
+}
+
+/* busca de endereço no ViaCEP */
+let ultimoCep = "";
+
+async function buscarCep() {
+  const digitos = pCep.value.replace(/\D/g, "");
+  if (digitos.length !== 8 || digitos === ultimoCep) return;
+  ultimoCep = digitos;
+
+  dicaCep.classList.remove("erro-cep");
+  dicaCep.textContent = "Buscando endereço...";
+
+  try {
+    const r = await fetch(`https://viacep.com.br/ws/${digitos}/json/`);
+    if (!r.ok) throw new Error("ViaCEP respondeu " + r.status);
+    const dados = await r.json();
+
+    if (dados.erro) {
+      dicaCep.classList.add("erro-cep");
+      dicaCep.textContent = "CEP não encontrado. Preencha o endereço à mão.";
+      return;
+    }
+
+    if (dados.logradouro) document.getElementById("pRua").value = dados.logradouro;
+    if (dados.bairro) document.getElementById("pBairro").value = dados.bairro;
+    if (dados.localidade) document.getElementById("pCidade").value = dados.localidade;
+    if (dados.uf) document.getElementById("pEstado").value = dados.uf;
+
+    ["pRua","pBairro","pCidade","pEstado"].forEach(function (id) {
+      document.getElementById(id).classList.remove("erro");
+    });
+    ["avisoPRua","avisoPBairro","avisoPCidade","avisoPEstado"].forEach(function (id) {
+      document.getElementById(id).classList.remove("ativo");
+    });
+
+    dicaCep.textContent = "Endereço preenchido. Confira e informe o número.";
+    document.getElementById("pNumero").focus();
+
+  } catch (err) {
+    console.error("FALHA NA BUSCA DO CEP:", err);
+    ultimoCep = "";
+    dicaCep.classList.add("erro-cep");
+    dicaCep.textContent = "Não conseguimos buscar o CEP. Preencha o endereço à mão.";
+  }
+}
 
 function marcar(id, avisoId, ruim) {
   document.getElementById(id).classList.toggle("erro", ruim);
@@ -440,6 +717,33 @@ function marcar(id, avisoId, ruim) {
   return !ruim;
 }
 
+/* ---- envio: os dois formulários passam por aqui ---- */
+async function enviar(corpo, dados, btn, rotuloBotao) {
+  btn.disabled = true;
+  btn.textContent = "Enviando...";
+
+  try {
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/leads_evento`, {
+      method: "POST",
+      headers: {
+        "apikey": SUPABASE_ANON_KEY,
+        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+        "Content-Type": "application/json",
+        "Prefer": "return=minimal"
+      },
+      body: JSON.stringify(corpo)
+    });
+
+    if (!r.ok) throw new Error(await r.text());
+    mostrarSucesso(dados, true);
+
+  } catch (err) {
+    console.error("FALHA AO SALVAR NO SUPABASE:", err);
+    mostrarSucesso(dados, true);
+  }
+}
+
+/* ---- modo "Quero saber mais" ---- */
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   erroGeral.classList.remove("ativo");
@@ -457,62 +761,132 @@ form.addEventListener("submit", async (e) => {
   ok = marcar("filial", "avisoFilial", !filial) && ok;
   if (!ok) return;
 
+  const dados = { modo:"saber", nome:nome, curso:curso, filial:filial, informacoes:informacoes };
+
   /* robô preencheu o campo escondido: finge que deu certo e não grava */
   if (document.getElementById("empresa").value) {
-    return mostrarSucesso(nome, curso, filial, informacoes, false);
+    return mostrarSucesso(dados, false);
   }
 
-  botao.disabled = true;
-  botao.textContent = "Enviando...";
-
-  try {
-    const r = await fetch(`${SUPABASE_URL}/rest/v1/leads_evento`, {
-      method: "POST",
-      headers: {
-        "apikey": SUPABASE_ANON_KEY,
-        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
-        "Content-Type": "application/json",
-        "Prefer": "return=minimal"
-      },
-      body: JSON.stringify({
-        nome: nome,
-        telefone: digitos,
-        curso: curso,
-        filial: filial,
-        informacoes: informacoes,
-        evento: NOME_EVENTO,
-        origem: "qrcode-estande"
-      })
-    });
-
-    if (!r.ok) throw new Error(await r.text());
-    mostrarSucesso(nome, curso, filial, informacoes, true);
-
-  } catch (err) {
-    console.error("FALHA AO SALVAR NO SUPABASE:", err);
-    mostrarSucesso(nome, curso, filial, informacoes, true);
-  }
+  enviar({
+    nome: nome,
+    telefone: digitos,
+    curso: curso,
+    filial: filial,
+    informacoes: informacoes,
+    evento: NOME_EVENTO,
+    origem: "qrcode-estande"
+  }, dados, botao);
 });
 
-function montarLinkWpp(nome, curso, filial, informacoes) {
-  var texto =
-    "*Cadastro do evento — InterSaúde*\n\n" +
-    "*Nome:* " + nome + "\n" +
-    "*Curso:* " + curso + "\n" +
-    "*Congregação:* " + filial;
-  if (informacoes) texto += "\n*Informações:* " + informacoes;
+/* ---- modo "Fazer pré-cadastro" ---- */
+formPre.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const nome = document.getElementById("pNome").value.trim();
+  const email = document.getElementById("pEmail").value.trim().toLowerCase();
+  const rua = document.getElementById("pRua").value.trim();
+  const numero = document.getElementById("pNumero").value.trim();
+  const complemento = document.getElementById("pComplemento").value.trim();
+  const bairro = document.getElementById("pBairro").value.trim();
+  const cidade = document.getElementById("pCidade").value.trim();
+  const estado = document.getElementById("pEstado").value.trim().toUpperCase();
+  const curso = document.getElementById("pCurso").value;
+  const filial = document.getElementById("pFilial").value.trim();
+  const digitos = pTel.value.replace(/\D/g, "");
+  const cpfDigitos = pCpf.value.replace(/\D/g, "");
+  const cepDigitos = pCep.value.replace(/\D/g, "");
+
+  let ok = true;
+  ok = marcar("pNome", "avisoPNome", nome.length < 3 || !nome.includes(" ")) && ok;
+  ok = marcar("pCpf", "avisoPCpf", !cpfValido(cpfDigitos)) && ok;
+  ok = marcar("pEmail", "avisoPEmail", !emailValido(email)) && ok;
+  ok = marcar("pTelefone", "avisoPTelefone", digitos.length < 10 || digitos.length > 11) && ok;
+  ok = marcar("pCep", "avisoPCep", cepDigitos.length !== 8) && ok;
+  ok = marcar("pRua", "avisoPRua", !rua) && ok;
+  ok = marcar("pNumero", "avisoPNumero", !numero) && ok;
+  ok = marcar("pBairro", "avisoPBairro", !bairro) && ok;
+  ok = marcar("pCidade", "avisoPCidade", !cidade) && ok;
+  ok = marcar("pEstado", "avisoPEstado", estado.length !== 2) && ok;
+  ok = marcar("pCurso", "avisoPCurso", !curso) && ok;
+  ok = marcar("pFilial", "avisoPFilial", !filial) && ok;
+  if (!ok) return;
+
+  const dados = {
+    modo: "pre",
+    nome: nome,
+    curso: curso,
+    filial: filial,
+    cpf: pCpf.value,
+    email: email,
+    endereco: montarEndereco(rua, numero, complemento, bairro, cidade, estado, pCep.value)
+  };
+
+  /* robô preencheu o campo escondido: finge que deu certo e não grava */
+  if (document.getElementById("pEmpresa").value) {
+    return mostrarSucesso(dados, false);
+  }
+
+  enviar({
+    nome: nome,
+    telefone: digitos,
+    curso: curso,
+    filial: filial,
+    informacoes: "",
+    evento: NOME_EVENTO,
+    origem: "pre-cadastro",
+    cpf: cpfDigitos,
+    email: email,
+    cep: cepDigitos,
+    rua: rua,
+    numero: numero,
+    complemento: complemento,
+    bairro: bairro,
+    cidade: cidade,
+    estado: estado
+  }, dados, botaoPre);
+});
+
+function montarEndereco(rua, numero, complemento, bairro, cidade, estado, cepFormatado) {
+  var texto = rua + ", " + numero;
+  if (complemento) texto += " - " + complemento;
+  texto += " - " + bairro + " - " + cidade + "/" + estado + " - CEP " + cepFormatado;
+  return texto;
+}
+
+function montarLinkWpp(d) {
+  var texto;
+  if (d.modo === "pre") {
+    texto =
+      "*Pré-cadastro de matrícula — InterSaúde*\n\n" +
+      "*Nome:* " + d.nome + "\n" +
+      "*CPF:* " + d.cpf + "\n" +
+      "*E-mail:* " + d.email + "\n" +
+      "*Curso:* " + d.curso + "\n" +
+      "*Congregação:* " + d.filial + "\n" +
+      "*Endereço:* " + d.endereco;
+  } else {
+    texto =
+      "*Cadastro do evento — InterSaúde*\n\n" +
+      "*Nome:* " + d.nome + "\n" +
+      "*Curso:* " + d.curso + "\n" +
+      "*Congregação:* " + d.filial;
+    if (d.informacoes) texto += "\n*Informações:* " + d.informacoes;
+  }
   return "https://wa.me/" + WHATSAPP_INTERSAUDE + "?text=" + encodeURIComponent(texto);
 }
 
-function mostrarSucesso(nome, curso, filial, informacoes, abrirWpp) {
-  var link = montarLinkWpp(nome, curso, filial, informacoes);
+function mostrarSucesso(d, abrirWpp) {
+  var link = montarLinkWpp(d);
   document.getElementById("linkWpp").href = link;
-  document.getElementById("okNome").textContent = nome;
-  document.getElementById("okCurso").textContent = curso;
-  document.getElementById("okFilial").textContent = filial;
+  document.getElementById("okNome").textContent = d.nome;
+  document.getElementById("okCurso").textContent = d.curso;
+  document.getElementById("okFilial").textContent = d.filial;
   document.getElementById("okData").textContent =
     new Date().toLocaleString("pt-BR", { day:"2-digit", month:"2-digit", hour:"2-digit", minute:"2-digit" });
+  seletor.style.display = "none";
   form.style.display = "none";
+  formPre.style.display = "none";
   document.getElementById("sucesso").style.display = "block";
   window.scrollTo(0, 0);
 
