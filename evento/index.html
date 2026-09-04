@@ -182,6 +182,23 @@
 
   .erro-geral.ativo{display:block}
 
+  .btn-retentar{
+    width:100%;
+    margin-top:12px;
+    font-size:15.5px;
+    font-weight:700;
+    color:#fff;
+    background:var(--danger);
+    border:none;
+    border-radius:10px;
+    padding:13px;
+    cursor:pointer;
+  }
+
+  .btn-retentar:hover:not(:disabled){background:#8E1E17}
+  .btn-retentar:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
+  .btn-retentar:disabled{background:#C99A96;cursor:default}
+
   /* honeypot */
   .hp{
     position:absolute;
@@ -367,11 +384,26 @@
 
   /* ================= PAINEL ADMINISTRATIVO ================= */
 
-  /* botão discreto no canto inferior direito */
+  /* rodapé com o acesso administrativo */
+  .rodape{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    max-width:520px;
+    width:100%;
+    margin:0 auto;
+    padding:18px 18px calc(18px + env(safe-area-inset-bottom));
+    border-top:1px solid var(--line);
+    font-size:12.5px;
+    font-weight:700;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--neutro);
+    opacity:.85;
+  }
+
   .btn-login{
-    position:fixed;
-    right:14px;
-    bottom:14px;
     width:auto;
     font-size:13px;
     font-weight:700;
@@ -379,12 +411,10 @@
     background:#fff;
     border:1.5px solid var(--line);
     border-radius:10px;
-    padding:9px 14px;
-    opacity:.75;
-    z-index:40;
+    padding:10px 16px;
   }
 
-  .btn-login:hover:not(:disabled){background:var(--paper);color:var(--navy);opacity:1}
+  .btn-login:hover:not(:disabled){background:var(--paper);color:var(--navy)}
 
   /* modal de login */
   .modal-fundo{
@@ -450,6 +480,9 @@
 
   /* painel */
   #painel{display:none}
+
+  /* o pre-cadastro nao usa WhatsApp: o mostrarSucesso decide qual bloco aparece */
+  #instrucaoPre{display:none}
 
   .painel-topo{
     background:var(--navy);
@@ -566,6 +599,96 @@
   table.leads td.largo{white-space:normal;min-width:220px}
   table.leads td.vazio{color:var(--neutro);opacity:.6}
 
+  /* ---- celula com botao de copiar ---- */
+  .celula{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    justify-content:space-between;
+  }
+
+  .celula .txt{flex:1;min-width:0}
+  .celula .txt.vazio{color:var(--neutro);opacity:.5}
+
+  .copias{display:flex;gap:4px;flex:none}
+
+  .btn-copiar{
+    position:relative;
+    width:36px;
+    height:36px;
+    min-width:36px;
+    padding:0;
+    flex:none;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    background:#fff;
+    border:1.5px solid var(--line);
+    border-radius:9px;
+    color:var(--neutro);
+    cursor:pointer;
+    transition:background .12s ease,border-color .12s ease,color .12s ease;
+    -webkit-tap-highlight-color:transparent;
+  }
+
+  .btn-copiar svg{
+    width:16px;
+    height:16px;
+    fill:none;
+    stroke:currentColor;
+    stroke-width:2;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+
+  .btn-copiar .rot{font-size:11px;font-weight:700;letter-spacing:.02em}
+
+  .btn-copiar .ok-ico{display:none}
+  .btn-copiar .ok-ico svg{width:17px;height:17px;stroke-width:2.6}
+
+  .btn-copiar:hover:not(:disabled){background:var(--paper);border-color:var(--teal);color:var(--teal)}
+  .btn-copiar:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
+  .btn-copiar:active:not(:disabled){transform:scale(.94)}
+
+  .btn-copiar:disabled{
+    background:var(--paper);
+    border-color:var(--line);
+    color:var(--neutro);
+    opacity:.35;
+    cursor:not-allowed;
+  }
+
+  /* feedback: vira check por 1 segundo */
+  .btn-copiar.ok{background:var(--teal);border-color:var(--teal);color:#fff}
+  .btn-copiar.ok .rot,.btn-copiar.ok > svg{display:none}
+  .btn-copiar.ok .ok-ico{display:inline-flex}
+
+  .btn-copiar.falhou{background:#FCEDEC;border-color:#EBC4C1;color:var(--danger)}
+
+  /* "Copiar tudo": botao largo no fim da linha */
+  .btn-copiar.largo{
+    width:auto;
+    min-width:132px;
+    height:38px;
+    gap:7px;
+    padding:0 14px;
+    font-family:inherit;
+    font-size:13.5px;
+    font-weight:700;
+    color:var(--navy);
+    border-color:#C3D2DA;
+  }
+
+  .btn-copiar.largo .rot-tudo{white-space:nowrap}
+  .btn-copiar.largo.ok{color:#fff}
+
+  /* alvo de toque maior no celular, sem inchar a tabela */
+  @media (hover:none){
+    .btn-copiar{width:40px;height:40px;min-width:40px}
+    .btn-copiar.largo{width:auto;height:42px}
+    table.leads th,table.leads td{padding:14px}
+  }
+
   .painel-msg{
     background:#fff;
     border:1.5px solid var(--line);
@@ -666,6 +789,11 @@
 
   <!-- ============ FORMULÁRIO — PRÉ-CADASTRO ============ -->
   <form id="formPre" novalidate>
+
+    <div class="erro-geral" id="erroPre">
+      <span id="erroPreTexto"></span>
+      <button type="button" class="btn-retentar" id="btnRetentar">Tentar novamente</button>
+    </div>
 
     <div class="campo">
       <label for="pNome">Nome completo</label>
@@ -784,18 +912,24 @@
           <span>Registrado em</span><span id="okData"></span>
         </div>
       </div>
-      <div class="instrucao">
+      <div class="instrucao" id="instrucaoWpp">
         <strong>Falta só enviar a mensagem</strong>
         Abrimos o WhatsApp da InterSaúde com seus dados preenchidos. Toque em enviar por lá.
         <a class="btn-wpp" id="linkWpp" href="#" target="_blank" rel="noopener">Abrir o WhatsApp</a>
+      </div>
+      <div class="instrucao" id="instrucaoPre">
+        <strong>Pré-cadastro concluído</strong>
+        Seus dados já estão com a nossa equipe. Entraremos em contato para finalizar a matrícula.
       </div>
     </div>
   </section>
 
 </main>
 
-<!-- ============ PAINEL ADMINISTRATIVO ============ -->
-<button type="button" class="btn-login" id="btnLogin">Login</button>
+<footer class="rodape">
+  <span>InterSaúde</span>
+  <button type="button" class="btn-login" id="btnLogin">Login</button>
+</footer>
 
 <div class="modal-fundo" id="modalLogin" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
   <div class="modal">
@@ -865,6 +999,9 @@ const formPre = document.getElementById("formPre");
 const botao = document.getElementById("botao");
 const botaoPre = document.getElementById("botaoPre");
 const erroGeral = document.getElementById("erroGeral");
+const erroPre = document.getElementById("erroPre");
+const erroPreTexto = document.getElementById("erroPreTexto");
+const btnRetentar = document.getElementById("btnRetentar");
 const tel = document.getElementById("telefone");
 const pTel = document.getElementById("pTelefone");
 const pCpf = document.getElementById("pCpf");
@@ -1021,8 +1158,38 @@ async function enviar(corpo, dados, btn, rotuloBotao) {
 
   } catch (err) {
     console.error("FALHA AO SALVAR NO SUPABASE:", err);
+
+    /* No pré-cadastro não há WhatsApp para recolher o contato: se o insert
+       falhou, fingir sucesso perderia o cadastro. Mostra o erro e deixa
+       reenviar os mesmos dados. No modo "Quero saber mais" nada muda —
+       lá o WhatsApp continua sendo a rede de proteção.                   */
+    if (dados.modo === "pre") {
+      mostrarFalhaPre(corpo, dados, btn);
+      return;
+    }
+
     mostrarSucesso(dados, true);
   }
+}
+
+function mostrarFalhaPre(corpo, dados, btn) {
+  btn.disabled = false;
+  btn.textContent = "Enviar pré-cadastro";
+
+  erroPreTexto.textContent =
+    "Não conseguimos salvar seu cadastro. Verifique sua conexão e tente novamente.";
+  btnRetentar.disabled = false;
+  btnRetentar.textContent = "Tentar novamente";
+  erroPre.classList.add("ativo");
+
+  /* reenvia exatamente os mesmos dados, sem repreencher nada */
+  btnRetentar.onclick = function () {
+    btnRetentar.disabled = true;
+    btnRetentar.textContent = "Reenviando...";
+    enviar(corpo, dados, btn);
+  };
+
+  erroPre.scrollIntoView({ block: "center" });
 }
 
 /* ---- modo "Quero saber mais" ---- */
@@ -1064,6 +1231,7 @@ form.addEventListener("submit", async (e) => {
 /* ---- modo "Fazer pré-cadastro" ---- */
 formPre.addEventListener("submit", async (e) => {
   e.preventDefault();
+  erroPre.classList.remove("ativo");
 
   const nome = document.getElementById("pNome").value.trim();
   const email = document.getElementById("pEmail").value.trim().toLowerCase();
@@ -1159,8 +1327,15 @@ function montarLinkWpp(d) {
 }
 
 function mostrarSucesso(d, abrirWpp) {
-  var link = montarLinkWpp(d);
-  document.getElementById("linkWpp").href = link;
+  /* o pré-cadastro não passa pelo WhatsApp: os dados vão só para a base */
+  var semWpp = d.modo === "pre";
+
+  var link = semWpp ? "" : montarLinkWpp(d);
+  if (!semWpp) document.getElementById("linkWpp").href = link;
+
+  document.getElementById("instrucaoWpp").style.display = semWpp ? "none" : "";
+  document.getElementById("instrucaoPre").style.display = semWpp ? "block" : "none";
+
   document.getElementById("okNome").textContent = d.nome;
   document.getElementById("okCurso").textContent = d.curso;
   document.getElementById("okFilial").textContent = d.filial;
@@ -1173,7 +1348,7 @@ function mostrarSucesso(d, abrirWpp) {
   window.scrollTo(0, 0);
 
   // abre o WhatsApp sozinho; se o navegador bloquear, o botão verde fica lá
-  if (abrirWpp) setTimeout(function(){ window.location.href = link; }, 400);
+  if (abrirWpp && !semWpp) setTimeout(function(){ window.location.href = link; }, 400);
 }
 </script>
 
@@ -1202,6 +1377,7 @@ function mostrarSucesso(d, abrirWpp) {
   var busca     = document.getElementById("busca");
   var topo      = document.querySelector(".topo");
   var principal = document.querySelector("main");
+  var rodape    = document.querySelector(".rodape");
 
   if (!window.supabase || typeof window.supabase.createClient !== "function") {
     if (btnLogin) btnLogin.style.display = "none";
@@ -1326,8 +1502,129 @@ function mostrarSucesso(d, abrirWpp) {
     document.getElementById("contaPre").textContent = c2;
   }
 
+  /* ---------------- ordem do formulario do Eduno ----------------
+     A secretaria preenche o Eduno nesta sequencia, entao a tabela
+     espelha exatamente essa ordem. COLUNAS (acima) segue intacta e
+     e usada so pelo CSV, para a exportacao nao mudar de formato.  */
+  function digitos(v) { return so(v).replace(/\D/g, ""); }
+
+  function celularEduno(v) {
+    var d = digitos(v);
+    if (d.length === 11) return d.slice(0,2) + "-" + d.slice(2,7) + "-" + d.slice(7);
+    if (d.length === 10) return d.slice(0,2) + "-" + d.slice(2,6) + "-" + d.slice(6);
+    return so(v);
+  }
+
+  var EDUNO = [
+    { rotulo:"CPF", valor:function (l) { return fmtCpf(l.cpf); }, copias:[
+        { titulo:"Copiar CPF formatado",  texto:function (l) { return fmtCpf(l.cpf); } },
+        { titulo:"Copiar CPF só números", numerico:true, texto:function (l) { return digitos(l.cpf); } } ] },
+
+    { rotulo:"Nome", valor:function (l) { return so(l.nome); }, largo:true, copias:[
+        { titulo:"Copiar nome", texto:function (l) { return so(l.nome); } } ] },
+
+    { rotulo:"E-mail", valor:function (l) { return so(l.email); }, copias:[
+        { titulo:"Copiar e-mail", texto:function (l) { return so(l.email); } } ] },
+
+    { rotulo:"Celular", valor:function (l) { return celularEduno(l.telefone); }, copias:[
+        { titulo:"Copiar celular no formato do Eduno", texto:function (l) { return celularEduno(l.telefone); } },
+        { titulo:"Copiar celular só números", numerico:true, texto:function (l) { return digitos(l.telefone); } } ] },
+
+    { rotulo:"CEP", valor:function (l) { return fmtCep(l.cep); }, copias:[
+        { titulo:"Copiar CEP", texto:function (l) { return fmtCep(l.cep); } } ] },
+
+    { rotulo:"Rua", valor:function (l) { return so(l.rua); }, largo:true, copias:[
+        { titulo:"Copiar rua", texto:function (l) { return so(l.rua); } } ] },
+
+    { rotulo:"Número", valor:function (l) { return so(l.numero); }, copias:[
+        { titulo:"Copiar número", texto:function (l) { return so(l.numero); } } ] },
+
+    { rotulo:"Complemento", valor:function (l) { return so(l.complemento); }, copias:[
+        { titulo:"Copiar complemento", texto:function (l) { return so(l.complemento); } } ] },
+
+    { rotulo:"Bairro", valor:function (l) { return so(l.bairro); }, copias:[
+        { titulo:"Copiar bairro", texto:function (l) { return so(l.bairro); } } ] },
+
+    { rotulo:"Cidade", valor:function (l) { return so(l.cidade); }, copias:[
+        { titulo:"Copiar cidade", texto:function (l) { return so(l.cidade); } } ] },
+
+    { rotulo:"Estado", valor:function (l) { return so(l.estado); }, copias:[
+        { titulo:"Copiar estado", texto:function (l) { return so(l.estado); } } ] }
+  ];
+
+  /* colunas que nao fazem parte do Eduno, mantidas depois dele */
+  var EXTRAS = [
+    { rotulo:"Curso",       valor:function (l) { return so(l.curso); } },
+    { rotulo:"Congregação", valor:function (l) { return so(l.congregacao); } },
+    { rotulo:"Informações", valor:function (l) { return so(l.informacoes); }, largo:true },
+    { rotulo:"Data",        valor:function (l) { return so(l.data_hora); } }
+  ];
+
+  function blocoEduno(l) {
+    return EDUNO.map(function (c) { return c.rotulo + ": " + c.valor(l); }).join("\n");
+  }
+
+  /* ---------------- copiar para a area de transferencia ---------------- */
+  function copiarTexto(texto) {
+    if (navigator.clipboard && navigator.clipboard.writeText && window.isSecureContext) {
+      return navigator.clipboard.writeText(texto);
+    }
+    /* fallback para http, WebView antiga ou clipboard bloqueado */
+    return new Promise(function (resolve, reject) {
+      try {
+        var ta = document.createElement("textarea");
+        ta.value = texto;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "fixed";
+        ta.style.top = "-1000px";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        ta.setSelectionRange(0, ta.value.length);
+        var ok = document.execCommand("copy");
+        document.body.removeChild(ta);
+        if (ok) resolve(); else reject(new Error("execCommand copy falhou"));
+      } catch (e) { reject(e); }
+    });
+  }
+
+  var SVG_COPIA = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h8"></path></svg>';
+  var SVG_OK    = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"></path></svg>';
+
+  function piscar(btn, classe) {
+    btn.classList.add(classe);
+    setTimeout(function () { btn.classList.remove(classe); }, 1000);
+  }
+
+  function botaoCopiar(campo, titulo, texto, numerico, largo) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "btn-copiar" + (numerico ? " num" : "") + (largo ? " largo" : "");
+    b.innerHTML = (numerico ? '<span class="rot">123</span>' : SVG_COPIA) +
+                  '<span class="ok-ico">' + SVG_OK + '</span>' +
+                  (largo ? '<span class="rot-tudo">Copiar tudo</span>' : "");
+
+    if (!texto) {
+      b.disabled = true;
+      b.title = campo + " vazio";
+      b.setAttribute("aria-label", campo + " vazio, nada para copiar");
+      return b;
+    }
+
+    b.title = titulo;
+    b.setAttribute("aria-label", titulo);
+    b.addEventListener("click", function () {
+      copiarTexto(texto).then(function () {
+        piscar(b, "ok");
+      }).catch(function (e) {
+        console.error("FALHA AO COPIAR:", e);
+        piscar(b, "falhou");
+      });
+    });
+    return b;
+  }
+
   function render() {
-    var cols = COLUNAS[origemAtual];
     var dados = visiveis();
 
     if (!dados.length) {
@@ -1338,6 +1635,8 @@ function mostrarSucesso(d, abrirWpp) {
       }
       return;
     }
+
+    var cols = EDUNO.concat(EXTRAS);
 
     var wrap = document.createElement("div");
     wrap.className = "tabela-wrap";
@@ -1351,22 +1650,49 @@ function mostrarSucesso(d, abrirWpp) {
       th.textContent = c.rotulo;
       trh.appendChild(th);
     });
+    var thTudo = document.createElement("th");
+    thTudo.textContent = "Linha";
+    trh.appendChild(thTudo);
     thead.appendChild(trh);
     tab.appendChild(thead);
 
     var tbody = document.createElement("tbody");
     dados.forEach(function (l) {
       var tr = document.createElement("tr");
+
       cols.forEach(function (c) {
         var td = document.createElement("td");
-        var v = c.valor(l);
         if (c.largo) td.className = "largo";
-        if (!v) { td.className = (td.className + " vazio").trim(); v = "—"; }
-        td.textContent = v;
+
+        var v = c.valor(l);
+        var cel = document.createElement("div");
+        cel.className = "celula";
+
+        var txt = document.createElement("span");
+        txt.className = "txt" + (v ? "" : " vazio");
+        txt.textContent = v || "—";
+        cel.appendChild(txt);
+
+        if (c.copias) {
+          var grupo = document.createElement("span");
+          grupo.className = "copias";
+          c.copias.forEach(function (cp) {
+            grupo.appendChild(botaoCopiar(c.rotulo, cp.titulo, cp.texto(l), cp.numerico, false));
+          });
+          cel.appendChild(grupo);
+        }
+
+        td.appendChild(cel);
         tr.appendChild(td);
       });
+
+      var tdTudo = document.createElement("td");
+      tdTudo.appendChild(botaoCopiar("Linha", "Copiar todos os campos na ordem do Eduno", blocoEduno(l), false, true));
+      tr.appendChild(tdTudo);
+
       tbody.appendChild(tr);
     });
+
     tab.appendChild(tbody);
     wrap.appendChild(tab);
 
@@ -1443,7 +1769,7 @@ function mostrarSucesso(d, abrirWpp) {
     document.getElementById("painelUsuario").textContent = email ? ("Conectado como " + email) : "";
     if (topo) topo.style.display = "none";
     if (principal) principal.style.display = "none";
-    btnLogin.style.display = "none";
+    if (rodape) rodape.style.display = "none";
     fecharModal();
     painel.style.display = "block";
     window.scrollTo(0, 0);
@@ -1454,7 +1780,7 @@ function mostrarSucesso(d, abrirWpp) {
     painel.style.display = "none";
     if (topo) topo.style.display = "";
     if (principal) principal.style.display = "";
-    btnLogin.style.display = "";
+    if (rodape) rodape.style.display = "";
     linhas = [];
     busca.value = "";
     conteudo.innerHTML = "";
