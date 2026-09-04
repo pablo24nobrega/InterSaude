@@ -364,6 +364,233 @@
 
   /* o pre-cadastro comeca escondido; o seletor decide */
   #formPre{display:none}
+
+  /* ================= PAINEL ADMINISTRATIVO ================= */
+
+  /* botão discreto no canto inferior direito */
+  .btn-login{
+    position:fixed;
+    right:14px;
+    bottom:14px;
+    width:auto;
+    font-size:13px;
+    font-weight:700;
+    color:var(--neutro);
+    background:#fff;
+    border:1.5px solid var(--line);
+    border-radius:10px;
+    padding:9px 14px;
+    opacity:.75;
+    z-index:40;
+  }
+
+  .btn-login:hover:not(:disabled){background:var(--paper);color:var(--navy);opacity:1}
+
+  /* modal de login */
+  .modal-fundo{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(14,42,71,.55);
+    z-index:50;
+    padding:20px;
+    overflow-y:auto;
+  }
+
+  .modal-fundo.ativo{display:flex;align-items:center;justify-content:center}
+
+  .modal{
+    background:#fff;
+    border-radius:18px;
+    width:100%;
+    max-width:400px;
+    overflow:hidden;
+    box-shadow:0 12px 40px rgba(14,42,71,.28);
+  }
+
+  .modal-topo{
+    background:var(--navy);
+    color:#fff;
+    padding:20px 22px;
+  }
+
+  .modal-topo strong{display:block;font-size:18px;font-weight:700}
+  .modal-topo span{display:block;margin-top:5px;font-size:14px;color:#BDD1DE}
+
+  .modal-corpo{padding:22px}
+
+  input[type=email],input[type=password]{
+    width:100%;
+    font-size:17px;
+    font-family:inherit;
+    color:var(--ink);
+    background:#fff;
+    border:1.5px solid var(--line);
+    border-radius:12px;
+    padding:15px 14px;
+    appearance:none;
+  }
+
+  input[type=email]:focus,input[type=password]:focus{
+    outline:none;
+    border-color:var(--teal);
+    box-shadow:0 0 0 3px rgba(23,149,140,.18);
+  }
+
+  input[type=email].erro,input[type=password].erro{border-color:var(--danger)}
+
+  .btn-secundario{
+    background:transparent;
+    color:var(--neutro);
+    border:1.5px solid var(--line);
+    margin-top:10px;
+  }
+
+  .btn-secundario:hover:not(:disabled){background:var(--paper);color:var(--navy)}
+
+  /* painel */
+  #painel{display:none}
+
+  .painel-topo{
+    background:var(--navy);
+    color:#fff;
+    padding:20px 18px;
+  }
+
+  .painel-topo h2{font-size:20px;font-weight:700;letter-spacing:-.02em}
+  .painel-topo p{margin-top:4px;font-size:13.5px;color:#BDD1DE;word-break:break-word}
+
+  .painel-corpo{
+    padding:18px 14px 40px;
+    max-width:1000px;
+    margin:0 auto;
+  }
+
+  .painel-abas{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:6px;
+    background:#fff;
+    border:1.5px solid var(--line);
+    border-radius:14px;
+    padding:6px;
+    margin-bottom:14px;
+  }
+
+  .aba-adm{
+    width:100%;
+    font-family:inherit;
+    font-size:14.5px;
+    font-weight:700;
+    color:var(--neutro);
+    background:transparent;
+    border:none;
+    border-radius:10px;
+    padding:12px 6px;
+    cursor:pointer;
+  }
+
+  .aba-adm:hover:not(.ativa){background:var(--paper);color:var(--neutro)}
+  .aba-adm.ativa,.aba-adm.ativa:hover{background:var(--teal);color:#fff}
+
+  .aba-adm .conta{
+    display:inline-block;
+    min-width:22px;
+    margin-left:6px;
+    padding:1px 7px;
+    border-radius:9px;
+    background:var(--line);
+    color:var(--navy);
+    font-size:12.5px;
+  }
+
+  .aba-adm.ativa .conta{background:rgba(255,255,255,.25);color:#fff}
+
+  .painel-acoes{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:10px;
+    margin-bottom:14px;
+  }
+
+  @media (min-width:560px){
+    .painel-acoes{grid-template-columns:1fr auto auto}
+  }
+
+  .painel-acoes input[type=text]{margin:0}
+
+  .btn-acao{
+    width:100%;
+    font-size:15px;
+    padding:14px 18px;
+    white-space:nowrap;
+  }
+
+  .btn-sair{background:var(--navy)}
+  .btn-sair:hover:not(:disabled){background:var(--navy-soft)}
+
+  .tabela-wrap{
+    background:#fff;
+    border:1.5px solid var(--line);
+    border-radius:14px;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+
+  table.leads{
+    border-collapse:collapse;
+    width:100%;
+    font-size:14px;
+  }
+
+  table.leads th,table.leads td{
+    text-align:left;
+    padding:12px 14px;
+    border-bottom:1px solid var(--line);
+    white-space:nowrap;
+    vertical-align:top;
+  }
+
+  table.leads th{
+    background:var(--paper);
+    color:var(--neutro);
+    font-size:11.5px;
+    font-weight:700;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    position:sticky;
+    top:0;
+  }
+
+  table.leads tr:last-child td{border-bottom:none}
+  table.leads td.largo{white-space:normal;min-width:220px}
+  table.leads td.vazio{color:var(--neutro);opacity:.6}
+
+  .painel-msg{
+    background:#fff;
+    border:1.5px solid var(--line);
+    border-radius:14px;
+    padding:26px 20px;
+    text-align:center;
+    font-size:14.5px;
+    line-height:1.5;
+    color:var(--neutro);
+  }
+
+  .painel-msg.alerta{
+    background:#FCEDEC;
+    border-color:#EBC4C1;
+    color:var(--danger);
+  }
+
+  .painel-msg strong{display:block;margin-bottom:6px;color:var(--navy);font-size:15.5px}
+  .painel-msg.alerta strong{color:var(--danger)}
+
+  @media (prefers-color-scheme:dark){
+    .btn-login,.modal,.tabela-wrap,.painel-abas,.painel-msg{background:#fff}
+    input[type=email],input[type=password]{background:#fff;color:var(--ink)}
+    table.leads th{background:var(--paper);color:var(--neutro)}
+  }
 </style>
 </head>
 <body>
@@ -566,6 +793,61 @@
   </section>
 
 </main>
+
+<!-- ============ PAINEL ADMINISTRATIVO ============ -->
+<button type="button" class="btn-login" id="btnLogin">Login</button>
+
+<div class="modal-fundo" id="modalLogin" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
+  <div class="modal">
+    <div class="modal-topo">
+      <strong id="modalTitulo">Área administrativa</strong>
+      <span>Acesso restrito à equipe da InterSaúde.</span>
+    </div>
+    <div class="modal-corpo">
+      <form id="formLogin" novalidate>
+
+        <div class="erro-geral" id="erroLogin"></div>
+
+        <div class="campo">
+          <label for="admEmail">E-mail</label>
+          <input type="email" id="admEmail" autocomplete="username" autocapitalize="off" spellcheck="false" placeholder="voce@intersaude.com">
+        </div>
+
+        <div class="campo">
+          <label for="admSenha">Senha</label>
+          <input type="password" id="admSenha" autocomplete="current-password" placeholder="Sua senha">
+        </div>
+
+        <button type="submit" id="btnEntrar">Entrar</button>
+        <button type="button" class="btn-secundario" id="btnCancelar">Cancelar</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<section id="painel">
+  <div class="painel-topo">
+    <h2>Cadastros do evento</h2>
+    <p id="painelUsuario"></p>
+  </div>
+
+  <div class="painel-corpo">
+
+    <div class="painel-abas" role="tablist">
+      <button type="button" class="aba-adm ativa" data-origem="qrcode-estande" role="tab" aria-selected="true">Interesse<span class="conta" id="contaInteresse">0</span></button>
+      <button type="button" class="aba-adm" data-origem="pre-cadastro" role="tab" aria-selected="false">Pré-cadastro<span class="conta" id="contaPre">0</span></button>
+    </div>
+
+    <div class="painel-acoes">
+      <input type="text" id="busca" placeholder="Buscar por nome, telefone ou CPF" autocomplete="off" autocapitalize="off" spellcheck="false">
+      <button type="button" class="btn-acao" id="btnCsv">Exportar CSV</button>
+      <button type="button" class="btn-acao btn-sair" id="btnSair">Sair</button>
+    </div>
+
+    <div id="painelConteudo"></div>
+
+  </div>
+</section>
 
 <script>
 /* ================================================================
@@ -893,6 +1175,402 @@ function mostrarSucesso(d, abrirWpp) {
   // abre o WhatsApp sozinho; se o navegador bloquear, o botão verde fica lá
   if (abrirWpp) setTimeout(function(){ window.location.href = link; }, 400);
 }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+/* ================================================================
+   PAINEL ADMINISTRATIVO
+   Isolado numa IIFE: nao cria nenhum global e nao toca em nada
+   do formulario. Se a biblioteca do Supabase nao carregar, o botao
+   de login some e a pagina segue funcionando normalmente.
+   ================================================================ */
+(function () {
+  "use strict";
+
+  var VIEW = "leads_evento_br";
+
+  var btnLogin  = document.getElementById("btnLogin");
+  var modal     = document.getElementById("modalLogin");
+  var formLogin = document.getElementById("formLogin");
+  var erroLogin = document.getElementById("erroLogin");
+  var admEmail  = document.getElementById("admEmail");
+  var admSenha  = document.getElementById("admSenha");
+  var btnEntrar = document.getElementById("btnEntrar");
+  var painel    = document.getElementById("painel");
+  var conteudo  = document.getElementById("painelConteudo");
+  var busca     = document.getElementById("busca");
+  var topo      = document.querySelector(".topo");
+  var principal = document.querySelector("main");
+
+  if (!window.supabase || typeof window.supabase.createClient !== "function") {
+    if (btnLogin) btnLogin.style.display = "none";
+    return;
+  }
+
+  var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+    auth: { persistSession: true, autoRefreshToken: true, storageKey: "intersaude-adm" }
+  });
+
+  var linhas = [];
+  var origemAtual = "qrcode-estande";
+
+  /* ---------------- colunas de cada aba ---------------- */
+  function so(v) { return (v === null || v === undefined) ? "" : String(v); }
+
+  function fmtTelefone(v) {
+    var d = so(v).replace(/\D/g, "");
+    if (d.length === 11) return "(" + d.slice(0,2) + ") " + d.slice(2,7) + "-" + d.slice(7);
+    if (d.length === 10) return "(" + d.slice(0,2) + ") " + d.slice(2,6) + "-" + d.slice(6);
+    return so(v);
+  }
+
+  function fmtCpf(v) {
+    var d = so(v).replace(/\D/g, "");
+    if (d.length !== 11) return so(v);
+    return d.slice(0,3) + "." + d.slice(3,6) + "." + d.slice(6,9) + "-" + d.slice(9);
+  }
+
+  function fmtCep(v) {
+    var d = so(v).replace(/\D/g, "");
+    return d.length === 8 ? d.slice(0,5) + "-" + d.slice(5) : so(v);
+  }
+
+  function endereco(l) {
+    if (!so(l.rua) && !so(l.cidade)) return "";
+    var t = so(l.rua);
+    if (so(l.numero)) t += ", " + so(l.numero);
+    if (so(l.complemento)) t += " - " + so(l.complemento);
+    if (so(l.bairro)) t += " - " + so(l.bairro);
+    if (so(l.cidade)) t += " - " + so(l.cidade);
+    if (so(l.estado)) t += "/" + so(l.estado);
+    if (so(l.cep)) t += " - CEP " + fmtCep(l.cep);
+    return t;
+  }
+
+  var COLUNAS = {
+    "qrcode-estande": [
+      { rotulo:"Nome",        valor: function (l) { return so(l.nome); } },
+      { rotulo:"WhatsApp",    valor: function (l) { return fmtTelefone(l.telefone); } },
+      { rotulo:"Curso",       valor: function (l) { return so(l.curso); } },
+      { rotulo:"Congregação", valor: function (l) { return so(l.congregacao); } },
+      { rotulo:"Informações", valor: function (l) { return so(l.informacoes); }, largo:true },
+      { rotulo:"Data",        valor: function (l) { return so(l.data_hora); } }
+    ],
+    "pre-cadastro": [
+      { rotulo:"Nome",        valor: function (l) { return so(l.nome); } },
+      { rotulo:"CPF",         valor: function (l) { return fmtCpf(l.cpf); } },
+      { rotulo:"E-mail",      valor: function (l) { return so(l.email); } },
+      { rotulo:"WhatsApp",    valor: function (l) { return fmtTelefone(l.telefone); } },
+      { rotulo:"Curso",       valor: function (l) { return so(l.curso); } },
+      { rotulo:"Congregação", valor: function (l) { return so(l.congregacao); } },
+      { rotulo:"Endereço",    valor: endereco, largo:true },
+      { rotulo:"Data",        valor: function (l) { return so(l.data_hora); } }
+    ]
+  };
+
+  /* ---------------- ordenação: aceita ISO e dd/mm/aaaa ---------------- */
+  function instante(v) {
+    var s = so(v).trim();
+    if (!s) return 0;
+    var br = s.match(/^(\d{2})\/(\d{2})\/(\d{4})(?:[ ,]+(\d{2}):(\d{2})(?::(\d{2}))?)?/);
+    if (br) {
+      return new Date(+br[3], +br[2] - 1, +br[1], +(br[4] || 0), +(br[5] || 0), +(br[6] || 0)).getTime();
+    }
+    var t = Date.parse(s);
+    return isNaN(t) ? 0 : t;
+  }
+
+  /* ---------------- busca ---------------- */
+  function normalizar(s) {
+    return so(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  }
+
+  function combina(l, termo) {
+    if (!termo) return true;
+    var alvo = normalizar(termo).trim();
+    var digitos = alvo.replace(/\D/g, "");
+    if (normalizar(l.nome).indexOf(alvo) !== -1) return true;
+    if (digitos) {
+      if (so(l.telefone).replace(/\D/g, "").indexOf(digitos) !== -1) return true;
+      if (so(l.cpf).replace(/\D/g, "").indexOf(digitos) !== -1) return true;
+    }
+    return false;
+  }
+
+  function visiveis() {
+    return linhas
+      .filter(function (l) { return so(l.origem) === origemAtual; })
+      .filter(function (l) { return combina(l, busca.value); });
+  }
+
+  /* ---------------- render ---------------- */
+  function aviso(titulo, texto, alerta) {
+    conteudo.innerHTML = "";
+    var d = document.createElement("div");
+    d.className = "painel-msg" + (alerta ? " alerta" : "");
+    var s = document.createElement("strong");
+    s.textContent = titulo;
+    d.appendChild(s);
+    d.appendChild(document.createTextNode(texto));
+    conteudo.appendChild(d);
+  }
+
+  function contar() {
+    var c1 = 0, c2 = 0;
+    linhas.forEach(function (l) {
+      if (so(l.origem) === "qrcode-estande") c1++;
+      else if (so(l.origem) === "pre-cadastro") c2++;
+    });
+    document.getElementById("contaInteresse").textContent = c1;
+    document.getElementById("contaPre").textContent = c2;
+  }
+
+  function render() {
+    var cols = COLUNAS[origemAtual];
+    var dados = visiveis();
+
+    if (!dados.length) {
+      if (busca.value.trim()) {
+        aviso("Nenhum resultado", "Nada encontrado para essa busca nesta aba.", false);
+      } else {
+        aviso("Nenhum cadastro nesta aba", "Assim que chegarem, eles aparecem aqui.", false);
+      }
+      return;
+    }
+
+    var wrap = document.createElement("div");
+    wrap.className = "tabela-wrap";
+    var tab = document.createElement("table");
+    tab.className = "leads";
+
+    var thead = document.createElement("thead");
+    var trh = document.createElement("tr");
+    cols.forEach(function (c) {
+      var th = document.createElement("th");
+      th.textContent = c.rotulo;
+      trh.appendChild(th);
+    });
+    thead.appendChild(trh);
+    tab.appendChild(thead);
+
+    var tbody = document.createElement("tbody");
+    dados.forEach(function (l) {
+      var tr = document.createElement("tr");
+      cols.forEach(function (c) {
+        var td = document.createElement("td");
+        var v = c.valor(l);
+        if (c.largo) td.className = "largo";
+        if (!v) { td.className = (td.className + " vazio").trim(); v = "—"; }
+        td.textContent = v;
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+    tab.appendChild(tbody);
+    wrap.appendChild(tab);
+
+    conteudo.innerHTML = "";
+    conteudo.appendChild(wrap);
+  }
+
+  /* ---------------- carga dos dados ---------------- */
+  async function carregar() {
+    aviso("Carregando...", "Buscando os cadastros.", false);
+
+    var r = await sb.from(VIEW).select("*");
+
+    if (r.error) {
+      var m = so(r.error.message);
+      var permissao = r.error.code === "42501" || r.error.code === "PGRST301" ||
+                      /permission|jwt|token|denied/i.test(m);
+      if (permissao) {
+        aviso("Sessão expirada ou sem permissão",
+              "Saia e faça login novamente para ver os cadastros.", true);
+      } else {
+        aviso("Não conseguimos carregar", m || "Erro desconhecido ao consultar a base.", true);
+      }
+      linhas = [];
+      contar();
+      return;
+    }
+
+    linhas = (r.data || []).slice().sort(function (a, b) {
+      return instante(b.data_hora) - instante(a.data_hora);
+    });
+
+    contar();
+
+    if (!linhas.length) {
+      aviso("Nenhum dado retornado",
+            "A consulta não trouxe nenhuma linha. Se você acabou de entrar, sua sessão pode ter expirado — saia e faça login novamente.", true);
+      return;
+    }
+
+    render();
+  }
+
+  /* ---------------- CSV ---------------- */
+  function csvEscapar(v) {
+    return '"' + so(v).replace(/"/g, '""') + '"';
+  }
+
+  function exportarCsv() {
+    var cols = COLUNAS[origemAtual];
+    var dados = visiveis();
+    if (!dados.length) return;
+
+    var linhasCsv = [cols.map(function (c) { return csvEscapar(c.rotulo); }).join(";")];
+    dados.forEach(function (l) {
+      linhasCsv.push(cols.map(function (c) { return csvEscapar(c.valor(l)); }).join(";"));
+    });
+
+    /* BOM para o Excel em pt-BR abrir com acento correto */
+    var blob = new Blob(["﻿" + linhasCsv.join("\r\n")], { type: "text/csv;charset=utf-8;" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    var hoje = new Date().toISOString().slice(0, 10);
+    a.href = url;
+    a.download = (origemAtual === "pre-cadastro" ? "pre-cadastro" : "interesse") + "-" + hoje + ".csv";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+  }
+
+  /* ---------------- telas ---------------- */
+  function mostrarPainel(email) {
+    document.getElementById("painelUsuario").textContent = email ? ("Conectado como " + email) : "";
+    if (topo) topo.style.display = "none";
+    if (principal) principal.style.display = "none";
+    btnLogin.style.display = "none";
+    fecharModal();
+    painel.style.display = "block";
+    window.scrollTo(0, 0);
+    carregar();
+  }
+
+  function mostrarPaginaNormal() {
+    painel.style.display = "none";
+    if (topo) topo.style.display = "";
+    if (principal) principal.style.display = "";
+    btnLogin.style.display = "";
+    linhas = [];
+    busca.value = "";
+    conteudo.innerHTML = "";
+    window.scrollTo(0, 0);
+  }
+
+  function abrirModal() {
+    erroLogin.classList.remove("ativo");
+    admEmail.classList.remove("erro");
+    admSenha.classList.remove("erro");
+    modal.classList.add("ativo");
+    admEmail.focus();
+  }
+
+  function fecharModal() {
+    modal.classList.remove("ativo");
+    admSenha.value = "";
+  }
+
+  /* ---------------- eventos ---------------- */
+  btnLogin.addEventListener("click", abrirModal);
+  document.getElementById("btnCancelar").addEventListener("click", fecharModal);
+
+  modal.addEventListener("click", function (e) {
+    if (e.target === modal) fecharModal();
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && modal.classList.contains("ativo")) fecharModal();
+  });
+
+  formLogin.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    erroLogin.classList.remove("ativo");
+    admEmail.classList.remove("erro");
+    admSenha.classList.remove("erro");
+
+    var email = admEmail.value.trim();
+    var senha = admSenha.value;
+
+    if (!email || !senha) {
+      admEmail.classList.toggle("erro", !email);
+      admSenha.classList.toggle("erro", !senha);
+      erroLogin.textContent = "Preencha o e-mail e a senha.";
+      erroLogin.classList.add("ativo");
+      return;
+    }
+
+    btnEntrar.disabled = true;
+    btnEntrar.textContent = "Entrando...";
+
+    var r = await sb.auth.signInWithPassword({ email: email, password: senha });
+
+    btnEntrar.disabled = false;
+    btnEntrar.textContent = "Entrar";
+
+    if (r.error) {
+      var cod = so(r.error.code || r.error.message);
+      admEmail.classList.add("erro");
+      admSenha.classList.add("erro");
+      if (/invalid_credentials|invalid login/i.test(cod)) {
+        erroLogin.textContent = "E-mail ou senha incorretos. Confira e tente de novo.";
+      } else if (/email_not_confirmed/i.test(cod)) {
+        erroLogin.textContent = "Este e-mail ainda não foi confirmado.";
+      } else if (/rate|too many/i.test(cod)) {
+        erroLogin.textContent = "Muitas tentativas seguidas. Espere um minuto e tente de novo.";
+      } else {
+        erroLogin.textContent = "Não foi possível entrar: " + so(r.error.message);
+      }
+      erroLogin.classList.add("ativo");
+      admSenha.value = "";
+      return;
+    }
+
+    mostrarPainel(r.data && r.data.user ? r.data.user.email : email);
+  });
+
+  document.getElementById("btnSair").addEventListener("click", async function () {
+    var r;
+    try { r = await sb.auth.signOut(); } catch (e) { r = { error: e }; }
+
+    /* se a chamada ao servidor falhar (sem sinal, por exemplo), a sessao
+       ainda precisa morrer neste aparelho: senao o painel volta no reload */
+    if (r && r.error) {
+      console.error("SIGNOUT FALHOU NO SERVIDOR, encerrando so localmente:", r.error);
+      try { await sb.auth.signOut({ scope: "local" }); } catch (e) {}
+      try { window.localStorage.removeItem("intersaude-adm"); } catch (e) {}
+    }
+
+    mostrarPaginaNormal();
+  });
+
+  document.getElementById("btnCsv").addEventListener("click", exportarCsv);
+
+  busca.addEventListener("input", function () {
+    if (linhas.length) render();
+  });
+
+  document.querySelectorAll(".aba-adm").forEach(function (aba) {
+    aba.addEventListener("click", function () {
+      origemAtual = aba.dataset.origem;
+      document.querySelectorAll(".aba-adm").forEach(function (a) {
+        var ativa = a === aba;
+        a.classList.toggle("ativa", ativa);
+        a.setAttribute("aria-selected", ativa ? "true" : "false");
+      });
+      if (linhas.length) render();
+    });
+  });
+
+  /* ---------------- sessão que sobrevive ao reload ---------------- */
+  sb.auth.getSession().then(function (r) {
+    var s = r && r.data ? r.data.session : null;
+    if (s && s.user) mostrarPainel(s.user.email);
+  });
+})();
 </script>
 </body>
 </html>
